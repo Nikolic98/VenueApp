@@ -1,7 +1,9 @@
 package com.example.venueapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.venueapp.activities.LoginActivity
 import com.example.venueapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -11,6 +13,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     private fun crashTest() {

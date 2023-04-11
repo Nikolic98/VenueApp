@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'kotlin-kapt'
+    id 'kotlin-android'
 }
 
 android {
@@ -23,6 +25,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "ROOT_URL", "\"https://api-qa.menu.app/\""
+        }
+        debug {
+            release
         }
     }
     compileOptions {
@@ -37,6 +43,16 @@ android {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
+def dagger_version = '2.45'
+def lifecycle_version = '2.6.1'
+def firebase_bom_version= '31.4.0'
+def retrofit_version = '2.9.0'
+def gson_version = '2.10'
+
 dependencies {
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -45,16 +61,38 @@ dependencies {
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.15.1'
     // Firebase BOM
-    implementation platform('com.google.firebase:firebase-bom:31.4.0')
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     // Retrofit 2
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+//    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    // Gson
+    api "com.google.code.gson:gson:$gson_version"
+    // Interceptor
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+//    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
+    // Dagger 2
+//    implementation "com.google.dagger:dagger:$dagger_version"
+//    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+//    implementation "com.google.dagger:dagger-android:$dagger_version"
+//    implementation "com.google.dagger:dagger-android-support:$dagger_version" // if you use the support libraries
+//    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+//    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
