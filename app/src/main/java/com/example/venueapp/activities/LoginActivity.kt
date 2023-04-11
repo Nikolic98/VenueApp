@@ -1,6 +1,8 @@
 package com.example.venueapp.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -17,6 +19,7 @@ import com.example.venueapp.viewModel.LoginViewModel
 import com.example.venueapp.viewModel.ViewModelFactory
 import com.example.venueapp.viewModel.result.ErrorResultState
 import com.example.venueapp.viewModel.result.SuccessResultState
+import com.xwray.groupie.GroupAdapter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -45,15 +48,13 @@ class LoginActivity : BoundBaseActivity() {
                 viewModelFactory)[LoginViewModel::class.java.name, LoginViewModel::class.java]
 
         binding.signInBtn.setOnClickListener { onSignIn() }
-
-        initObserver()
-
         // Dismisses  the keyboard
         binding.root.setOnTouchListener { view, _ ->
             val inputMethodManager = getSystemService(
                     Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
+        initObserver()
     }
 
     private fun initObserver() {
@@ -73,15 +74,16 @@ class LoginActivity : BoundBaseActivity() {
         val email = binding.emailEditText.text.toString()
         val password = binding.passwordEditText.text.toString()
 
-        if (TextUtils.isEmpty(email)) {
-            longToast(resources.getText(R.string.email_error))
-            return
-        }
-        if (TextUtils.isEmpty(password)) {
-            longToast(resources.getText(R.string.password_error))
-            return
-        }
+//        if (TextUtils.isEmpty(email)) {
+//            longToast(resources.getText(R.string.email_error))
+//            return
+//        }
+//        if (TextUtils.isEmpty(password)) {
+//            longToast(resources.getText(R.string.password_error))
+//            return
+//        }
 
-        loginViewModel.loginUser(this@LoginActivity, email, password)
+//        loginViewModel.loginUser(this@LoginActivity, email, password)
+        startActivity(Intent(this, VenueListActivity::class.java))
     }
 }

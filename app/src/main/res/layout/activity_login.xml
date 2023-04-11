@@ -23,24 +23,19 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/H1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:fontFamily="@font/circular_std"
             android:gravity="center"
-            android:text="@string/login_screen_title"
-            android:textColor="@color/black"
-            android:textSize="28sp"
-            android:textStyle="bold"/>
+            android:text="@string/login_screen_title"/>
 
         <TextView
+            style="@style/H2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/circular_std"
             android:gravity="center"
-            android:text="@string/login_screen_description"
-            android:textColor="@color/black"
-            android:textSize="17sp"/>
+            android:text="@string/login_screen_description"/>
     </LinearLayout>
 
     <LinearLayout
@@ -52,6 +47,7 @@
 
         <EditText
             android:id="@+id/email_edit_text"
+            style="@style/HintText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="30dp"
@@ -63,6 +59,7 @@
 
         <EditText
             android:id="@+id/password_edit_text"
+            style="@style/HintText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/grey"
@@ -74,6 +71,7 @@
 
     <Button
         android:id="@+id/sign_in_btn"
+        style="@style/ButtonText"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"

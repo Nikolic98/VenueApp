@@ -9,5 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="button_orange">#F2613D</color>
     <color name="grey">#2C2C3133</color>
+    <color name="grey2">#992C2C31</color>
+    <color name="unactive_grey">#662C2C31</color>
+    <color name="separator">#0F2C2C31</color>
     <color name="background">@color/white</color>
 </resources>

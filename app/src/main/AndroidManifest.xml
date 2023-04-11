@@ -11,6 +11,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.VenueApp"
         tools:targetApi="31">
@@ -23,10 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true"/>
+        <activity
+            android:name=".activities.VenueListActivity"
+            android:exported="false"/>
     </application>
-
 </manifest>
