@@ -4,7 +4,7 @@ import android.content.Context
 import com.example.venueapp.content.AppCallback
 import com.example.venueapp.content.RetrofitService
 import com.example.venueapp.content.requests.LoginRequestBody
-import com.example.venueapp.content.response.AdvancedAPIResponse
+import com.example.venueapp.content.response.DefaultAPIResponse
 import com.example.venueapp.models.LoginResponse
 import retrofit2.Call
 import retrofit2.Response
@@ -20,10 +20,9 @@ class LoginManager(private val service: RetrofitService) {
         return suspendCoroutine {
             val body = LoginRequestBody(email, password).getRequestBody()
             service.getLoginController().loginUser(
-                    body).enqueue(object : AppCallback<AdvancedAPIResponse<LoginResponse>>(
-                    context) {
-                override fun onSuccess(call: Call<AdvancedAPIResponse<LoginResponse>>,
-                        response: Response<AdvancedAPIResponse<LoginResponse>>) {
+                    body).enqueue(object : AppCallback<DefaultAPIResponse<LoginResponse>>(context) {
+                override fun onSuccess(call: Call<DefaultAPIResponse<LoginResponse>>,
+                        response: Response<DefaultAPIResponse<LoginResponse>>) {
                     if (response.body() != null) {
                         it.resume(response.body()!!.data!!)
                     }

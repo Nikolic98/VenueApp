@@ -15,10 +15,5 @@ open class DefaultAPIResponse<T> : BaseAPIResponse() {
     val data: T? = null
 }
 
-open class AdvancedAPIResponse<T> : DefaultAPIResponse<T>() {
-    @SerializedName("info_message")
-    val errors: List<ResponseError>? = null
-}
-
 class ResponseError(@SerializedName("title") val title: String,
         @SerializedName("body") val body: String)

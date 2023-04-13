@@ -1,6 +1,6 @@
 package com.example.venueapp.content.controllers
 
-import com.example.venueapp.content.response.AdvancedAPIResponse
+import com.example.venueapp.content.response.DefaultAPIResponse
 import com.example.venueapp.models.VenuesResponse
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -12,5 +12,5 @@ import retrofit2.http.POST
  */
 interface VenueController {
     @POST("api/directory/search")
-    fun venues(@Body body: RequestBody): Call<AdvancedAPIResponse<VenuesResponse>>
+    fun venues(@Body body: RequestBody): Call<DefaultAPIResponse<VenuesResponse>>
 }

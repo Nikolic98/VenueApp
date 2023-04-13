@@ -2,15 +2,11 @@ package com.example.venueapp.content
 
 import android.content.Context
 import android.text.TextUtils
-import android.util.Log
-import com.example.venueapp.content.response.AdvancedAPIResponse
-import com.example.venueapp.content.response.ApiResponse
-import com.example.venueapp.content.response.BaseAPIResponse
+import com.example.venueapp.content.response.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
-
 
 /**
  * @author Marko Nikolic on 10.4.23.
@@ -26,12 +22,6 @@ abstract class AppCallback<T : BaseAPIResponse>(private val context: Context) : 
                 return@Thread
             } else {
                 parseError(response)
-                // Unsuccessful response
-//                if (response.errorBody() != null) {
-//                    parseError(response)
-//                } else {
-//                    onError(unknownErrorMessage)
-//                }
                 return@Thread
             }
         }.start()
@@ -50,15 +40,9 @@ abstract class AppCallback<T : BaseAPIResponse>(private val context: Context) : 
         val errorBody = response.errorBody()
         val gson = GsonProvider.instance.nullSerialized
         try {
-            // todo srediti error objekat
-            val apiResponse = gson.fromJson<ApiResponse<T>>(errorBody!!.string(),
-                    ApiResponse::class.java)
-            sendFailure(RuntimeException(apiResponse.error))
-
-//            if (apiResponse.errors?.isNotEmpty() == true) {
-//                for (error in apiResponse.errors)
-//                sendFailure(RuntimeException(error.body))
-//            }
+            val apiResponse = gson.fromJson(errorBody!!.string(), ApiResponse::class.java)
+            val errorMessage = apiResponse.data.error.body
+            onError(errorMessage)
         } catch (e: IOException) {
             sendFailure(RuntimeException(unknownErrorMessage))
         } catch (e2: Exception) {
