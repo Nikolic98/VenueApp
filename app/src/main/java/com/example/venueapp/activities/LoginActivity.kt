@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.venueapp.BoundBaseActivity
@@ -55,14 +56,24 @@ class LoginActivity : BoundBaseActivity() {
         loginViewModel.loginResult.observe(this) { result ->
             when (result) {
                 is SuccessResultState<*> -> {
+                    stopLoading()
                     startActivity(Intent(this, VenueListActivity::class.java))
                     finish()
                 }
                 is ErrorResultState -> {
+                    stopLoading()
                     longToast(result.error)
                 }
             }
         }
+    }
+
+    private fun startLoading() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun stopLoading() {
+        binding.progressBar.visibility = View.GONE
     }
 
     private fun onSignIn() {
@@ -77,6 +88,7 @@ class LoginActivity : BoundBaseActivity() {
             longToast(resources.getText(R.string.password_error))
             return
         }
+        startLoading()
 
         loginViewModel.loginUser(this@LoginActivity, email, password)
     }
