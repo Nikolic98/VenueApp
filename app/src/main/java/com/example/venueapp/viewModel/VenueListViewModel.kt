@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.venueapp.R
 import com.example.venueapp.managers.VenueManager
+import com.example.venueapp.network.NetworkConnectionResolve
 import com.example.venueapp.viewModel.result.ErrorResultState
 import com.example.venueapp.viewModel.result.ResultState
 import com.example.venueapp.viewModel.result.SuccessResultState
@@ -20,11 +22,16 @@ class VenueListViewModel @Inject constructor(private var venueManager: VenueMana
 
     fun getVenues(context: Context) {
         viewModelScope.launch {
-            try {
-                val venues = venueManager.getVenues(context)
-                venueListResult.value = SuccessResultState(venues)
-            } catch (t: Throwable) {
-                venueListResult.value = ErrorResultState(t.localizedMessage)
+            if (NetworkConnectionResolve.determineConnection(context)) {
+                try {
+                    val venues = venueManager.getVenues(context)
+                    venueListResult.value = SuccessResultState(venues)
+                } catch (t: Throwable) {
+                    venueListResult.value = ErrorResultState(t.localizedMessage)
+                }
+            } else {
+                venueListResult.value = ErrorResultState(
+                        context.resources.getString(R.string.no_internet))
             }
         }
     }
