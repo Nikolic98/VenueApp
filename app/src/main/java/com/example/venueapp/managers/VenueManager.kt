@@ -5,7 +5,6 @@ import com.example.venueapp.content.AppCallback
 import com.example.venueapp.content.RetrofitService
 import com.example.venueapp.content.requests.VenueRequestBody
 import com.example.venueapp.content.response.AdvancedAPIResponse
-import com.example.venueapp.models.Venues
 import com.example.venueapp.models.VenuesResponse
 import retrofit2.Call
 import retrofit2.Response

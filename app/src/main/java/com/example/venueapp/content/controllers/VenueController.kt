@@ -1,7 +1,6 @@
 package com.example.venueapp.content.controllers
 
 import com.example.venueapp.content.response.AdvancedAPIResponse
-import com.example.venueapp.models.Venues
 import com.example.venueapp.models.VenuesResponse
 import okhttp3.RequestBody
 import retrofit2.Call

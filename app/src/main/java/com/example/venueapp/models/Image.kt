@@ -8,8 +8,7 @@ import com.google.gson.annotations.SerializedName
  * @author Marko Nikolic on 13.4.23.
  */
 data class Image(@SerializedName("thumbnail_medium") val thumbnail: String) : Parcelable {
-    constructor(parcel: Parcel) : this(parcel.readString().toString()) {
-    }
+    constructor(parcel: Parcel) : this(parcel.readString().toString())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(thumbnail)

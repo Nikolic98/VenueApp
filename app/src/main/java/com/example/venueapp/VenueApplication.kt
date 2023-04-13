@@ -16,6 +16,18 @@ import com.example.venueapp.util.PrefHelper
  * @author Marko Nikolic on 9.4.23.
  */
 class VenueApplication : Application(), LifecycleObserver {
+
+    companion object {
+        @JvmStatic
+        operator fun get(context: Context): VenueApplication {
+            return context.applicationContext as VenueApplication
+        }
+
+        init {
+            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+        }
+    }
+
     private lateinit var appComponent: AppComponent
     private lateinit var applicationModule: ApplicationModule
     override fun onCreate() {
@@ -37,16 +49,5 @@ class VenueApplication : Application(), LifecycleObserver {
             initAppComponent()
         }
         return appComponent
-    }
-
-    companion object {
-        @JvmStatic
-        operator fun get(context: Context): VenueApplication {
-            return context.applicationContext as VenueApplication
-        }
-
-        init {
-            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
-        }
     }
 }

@@ -20,12 +20,4 @@ abstract class BoundBaseActivity : AppCompatActivity() {
         }
         injectActivity()
     }
-
-//    fun setupActionToolbar(toolbar: Toolbar) {
-//        toolbar.title = ""
-//        setSupportActionBar(toolbar)
-//        val actionBar = supportActionBar
-//        actionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
-//        actionBar?.setDisplayHomeAsUpEnabled(true)
-//    }
 }

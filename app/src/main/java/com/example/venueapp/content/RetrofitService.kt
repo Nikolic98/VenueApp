@@ -1,6 +1,5 @@
 package com.example.venueapp.content
 
-import androidx.annotation.NonNull
 import com.example.venueapp.content.controllers.LoginController
 import com.example.venueapp.content.controllers.VenueController
 import com.example.venueapp.content.requests.RequestConstants
@@ -31,55 +30,25 @@ class RetrofitService(rootUrl: String) {
                 GsonConverterFactory.create(gson))
     }
 
-    fun setupLoginController(token: String) {
-        RetrofitService.token = token
-        loginController = RetrofitService.createService(LoginController::class.java)
-    }
-
-    fun resetTokenAndControllers() {
-        RetrofitService.token = null
-        loginController = null
-    }
-
-    fun setupAllControllers(token: String) {
-        RetrofitService.Companion.token = token
-        loginController = RetrofitService.createService(LoginController::class.java)
-    }
-
     fun getLoginController(): LoginController {
         if (loginController == null) {
-            loginController = RetrofitService.createService(LoginController::class.java)
+            loginController = createService(LoginController::class.java)
         }
         return loginController!!
     }
 
     fun getVenueController(): VenueController {
         if (venueController == null) {
-            venueController = RetrofitService.createService(VenueController::class.java)
+            venueController = createService(VenueController::class.java)
         }
         return venueController!!
     }
-
-    val secondsTimeout: Long
-        get() = RetrofitService.Companion.SECONDS_TIMEOUT
-
-    /**
-     * Service controller paired with [OkHttpClient] which will be used with that controller.
-     * This class is the wrapper to enable easier call cancelling.
-     *
-     * @param <T> Service controller type.
-    </T> */
-    class ControllerControl<T> internal constructor(@get:NonNull @param:NonNull val controller: T,
-            @get:NonNull @param:NonNull val okHttpClient: OkHttpClient)
 
     companion object {
         private const val SECONDS_TIMEOUT: Long = 35
         private lateinit var builder: Retrofit.Builder
         private var humanityOkHttpClient: OkHttpClient? = null
         private var ROOT_URL: String? = null
-        const val API_SUFFIX = "api/"
-        const val REFRESH_GRANT_TYPE = "refresh_token"
-        private var token: String? = null
 
         /**
          * Service instantiating class per controller.
@@ -91,29 +60,19 @@ class RetrofitService(rootUrl: String) {
          * @return The created content controller.
         </S> */
         private fun <S> createService(serviceClass: Class<S>): S {
-            val interceptor: Interceptor = getTokenInterceptor()
-            val httpClient: OkHttpClient = RetrofitService.createHttpClient(interceptor)
+            val interceptor: Interceptor = getInterceptor()
+            val httpClient: OkHttpClient = createHttpClient(interceptor)
             val retrofit: Retrofit = builder.client(httpClient).baseUrl(ROOT_URL).build()
             return retrofit.create(serviceClass)
         }
 
-        private fun getTokenInterceptor(): Interceptor {
+        private fun getInterceptor(): Interceptor {
             return Interceptor { chain: Interceptor.Chain ->
                 val request = chain.request()
-                val header = request.header(RequestConstants.AUTHORIZATION)
-                if (header != null) {
-                    return@Interceptor chain.proceed(request)
-                }
-                if (token == null) {
-                    // todo
-//                    token = PrefHelper.getString(CoreValues.ACCOUNT_TOKEN)
-                }
                 val requestBuilder = request.newBuilder().header(RequestConstants.APPLICATION,
-                            "mobile-application").header("Content-Type", "application/json").header(
-                            "Device-UUID", "123456").header("Api-Version", "3.7.0").header(
-                            RequestConstants.AUTHORIZATION,
-                            RequestConstants.BEARER + " " + token).method(request.method,
-                            request.body)
+                        "mobile-application").header("Content-Type", "application/json").header(
+                        "Device-UUID", "123456").header("Api-Version", "3.7.0").method(
+                        request.method, request.body)
                 val generatedRequest = requestBuilder.build()
                 chain.proceed(generatedRequest)
             }
@@ -127,7 +86,7 @@ class RetrofitService(rootUrl: String) {
          */
         private fun createHttpClient(interceptor: Interceptor): OkHttpClient {
             val builder: OkHttpClient.Builder = getBaseOkHttpClient().newBuilder()
-            return RetrofitService.createClient(builder, interceptor)
+            return createClient(builder, interceptor)
         }
 
         private fun getBaseOkHttpClient(): OkHttpClient {
@@ -139,17 +98,15 @@ class RetrofitService(rootUrl: String) {
 
         private fun createClient(builder: OkHttpClient.Builder,
                 interceptor: Interceptor?): OkHttpClient {
-            builder.connectTimeout(RetrofitService.SECONDS_TIMEOUT, TimeUnit.SECONDS).readTimeout(
-                    RetrofitService.SECONDS_TIMEOUT, TimeUnit.SECONDS).writeTimeout(
-                    RetrofitService.SECONDS_TIMEOUT, TimeUnit.SECONDS)
+            builder.connectTimeout(SECONDS_TIMEOUT, TimeUnit.SECONDS).readTimeout(SECONDS_TIMEOUT,
+                    TimeUnit.SECONDS).writeTimeout(SECONDS_TIMEOUT, TimeUnit.SECONDS)
             builder.addInterceptor { chain: Interceptor.Chain ->
                 val request: Request = chain.request()
                 val response: Response = chain.proceed(request)
-                if (response.code === 307 && !request.method.equals("GET")) {
+                if (response.code === 307 && request.method != "GET") {
                     val requestBuilder = request.newBuilder().header(RequestConstants.APPLICATION,
-                                "mobile-application").header("Content-Type",
-                                "application/json").header("Device-UUID", "123456").header(
-                                "Api-Version", "3.7.0")
+                            "mobile-application").header("Content-Type", "application/json").header(
+                            "Device-UUID", "123456").header("Api-Version", "3.7.0")
                     val generatedRequest: Request = requestBuilder.build()
                     return@addInterceptor chain.proceed(generatedRequest)
                 }
@@ -162,10 +119,5 @@ class RetrofitService(rootUrl: String) {
             builder.followSslRedirects(true)
             return builder.build()
         }
-
-
-        val timeoutMillis: Long
-            get() = TimeUnit.SECONDS.toMillis(RetrofitService.Companion.SECONDS_TIMEOUT)
-
     }
 }

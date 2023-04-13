@@ -38,6 +38,8 @@ object PrefHelper : AppPrefHelper() {
         putString(TOKEN, token)
     }
 
+    fun getToken() = getString(TOKEN)
+
     val isTokenSaved: Boolean
-        get() = !getString(TOKEN).isEmpty()
+        get() = getToken().isNotEmpty()
 }

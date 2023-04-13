@@ -37,9 +37,6 @@ class GsonProvider private constructor() {
         return gson
     }
 
-    val builder: GsonBuilder
-        get() = gsonBuilder!!
-
     companion object {
         private var GsonProvider: GsonProvider? = null
         val instance: GsonProvider

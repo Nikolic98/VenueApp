@@ -16,8 +16,7 @@ data class VenueModel(@SerializedName("name") val name: String,
     constructor(parcel: Parcel) : this(parcel.readString().toString(),
             parcel.readString().toString(), parcel.readByte() != 0.toByte(),
             parcel.readString().toString(), parcel.readString().toString(),
-            parcel.readParcelable(Image::class.java.classLoader)) {
-    }
+            parcel.readParcelable(Image::class.java.classLoader))
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)

@@ -5,8 +5,6 @@ package com.example.venueapp.content.requests
  */
 class RequestConstants {
     companion object {
-        const val AUTHORIZATION = "Authorization"
         const val APPLICATION = "application"
-        const val BEARER = "Bearer"
     }
 }
