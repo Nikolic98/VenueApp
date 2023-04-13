@@ -12,4 +12,5 @@
     <string name="closed">Currently Closed</string>
     <string name="logout">Logout</string>
     <string name="no_internet">No internet connection</string>
+    <string name="no_data">There is no data </string>
 </resources>

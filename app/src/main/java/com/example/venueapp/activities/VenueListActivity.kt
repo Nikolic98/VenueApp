@@ -1,6 +1,7 @@
 package com.example.venueapp.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.example.venueapp.BoundBaseActivity
 import com.example.venueapp.VenueApplication
@@ -22,6 +23,7 @@ class VenueListActivity : BoundBaseActivity() {
     lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var venueListViewModel: VenueListViewModel
+    private val adapter = GroupieAdapter()
 
     override fun injectActivity() {
         VenueApplication[this].getAppComponent().inject(this)
@@ -37,6 +39,7 @@ class VenueListActivity : BoundBaseActivity() {
         venueListViewModel = ViewModelProvider(this,
                 viewModelFactory)[VenueListViewModel::class.java.name, VenueListViewModel::class.java]
 
+        binding.recyclerView.adapter = adapter
         binding.swipeRefresh.isRefreshing = true
         initObserver()
         venueListViewModel.getVenues(this)
@@ -56,16 +59,26 @@ class VenueListActivity : BoundBaseActivity() {
             when (result) {
                 is SuccessResultState<*> -> {
                     binding.swipeRefresh.isRefreshing = false
+                    adapter.clear()
                     val data = result.result as VenuesResponse
-                    val adapter = GroupieAdapter()
-                    data.venues.forEach {
-                        adapter.add(VenueItem(this, it, venueItemListener))
+                    if (data.venues.isEmpty()) {
+                        binding.emptyHolder.visibility = View.VISIBLE
+                    } else {
+                        data.venues.forEach {
+                            adapter.add(VenueItem(this, it, venueItemListener))
+                        }
                     }
-                    binding.recyclerView.adapter = adapter
                 }
                 is ErrorResultState -> {
                     binding.swipeRefresh.isRefreshing = false
                     longToast(result.error)
+                    if (!venueListViewModel.isConnectedToInternet(this)) {
+                        if (adapter.itemCount == 0) {
+                            binding.emptyHolder.visibility = View.VISIBLE
+                        }
+                    } else {
+                        binding.emptyHolder.visibility = View.GONE
+                    }
                 }
             }
         }

@@ -22,7 +22,7 @@ class VenueListViewModel @Inject constructor(private var venueManager: VenueMana
 
     fun getVenues(context: Context) {
         viewModelScope.launch {
-            if (NetworkConnectionResolve.determineConnection(context)) {
+            if (isConnectedToInternet(context)) {
                 try {
                     val venues = venueManager.getVenues(context)
                     venueListResult.value = SuccessResultState(venues)
@@ -35,4 +35,7 @@ class VenueListViewModel @Inject constructor(private var venueManager: VenueMana
             }
         }
     }
+
+    fun isConnectedToInternet(context: Context) = NetworkConnectionResolve.determineConnection(
+            context)
 }
