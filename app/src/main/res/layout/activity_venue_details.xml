@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".activities.VenueDetailsActivity">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/text_holder"
+        android:background="@color/black"
+        android:contentDescription="@null"/>
+
+    <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:contentDescription="@null"
+        android:padding="24dp"
+        android:src="@drawable/arrow_back"
+        app:tint="@color/white"/>
+
+    <LinearLayout
+        android:id="@+id/text_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="17dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/H2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="8dp"
+            tools:text="Ocean Drive Miami"/>
+
+        <TextView
+            android:id="@+id/welcome"
+            style="@style/p1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            tools:text="Welcome to Poké Bar"/>
+
+        <TextView
+            android:id="@+id/description"
+            style="@style/p1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="9dp"
+            android:textColor="@color/app_black_80"
+            tools:text="Poké Bar makes it easy to customize your bowl with endless toppings, proteins, mix-ins and more.Bar makes it easy to customize your bowl with endless toppings, proteins, mix-ins and more.Bar makes it easy to customize your bowl with endless toppings, proteins, mix-ins and more."/>
+
+        <TextView
+            android:id="@+id/working_time"
+            style="@style/p2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_text"
+            android:padding="4dp"
+            android:text="@string/closed"
+            android:textAllCaps="true"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/logout"
+        style="@style/p1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/logout"
+        android:textAllCaps="false"/>
+</RelativeLayout>

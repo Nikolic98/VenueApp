@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">VenueApp</string>
+    <string name="shared_prefs" translatable="false">application_preferences</string>
     <string name="login_screen_title">The easiest way to order</string>
     <string name="login_screen_description">No lines. No waiting.</string>
     <string name="email">Email</string>
@@ -7,4 +8,7 @@
     <string name="sign_in">Sign in</string>
     <string name="email_error">Email can\'t be empty</string>
     <string name="password_error">Password can\'t be empty</string>
+    <string name="open">Open</string>
+    <string name="closed">Currently Closed</string>
+    <string name="logout">Logout</string>
 </resources>

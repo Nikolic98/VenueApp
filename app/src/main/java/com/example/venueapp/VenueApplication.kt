@@ -10,6 +10,7 @@ import com.example.venueapp.modules.AppComponent
 import com.example.venueapp.modules.ApplicationModule
 import com.example.venueapp.modules.DaggerAppComponent
 import com.example.venueapp.modules.ManagerModule
+import com.example.venueapp.util.PrefHelper
 
 /**
  * @author Marko Nikolic on 9.4.23.
@@ -21,9 +22,7 @@ class VenueApplication : Application(), LifecycleObserver {
         super.onCreate()
         initAppComponent()
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-//        PrefHelper.initPrefs(applicationContext, getString(R.string.shared_prefs), MODE_PRIVATE)
-//        DevicePrefHelper.initPrefs(applicationContext, getString(R.string.device_prefs),
-//                MODE_PRIVATE)
+        PrefHelper.initPrefs(applicationContext, getString(R.string.shared_prefs), MODE_PRIVATE)
     }
 
     private fun initAppComponent() {

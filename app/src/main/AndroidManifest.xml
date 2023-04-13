@@ -30,5 +30,8 @@
         <activity
             android:name=".activities.VenueListActivity"
             android:exported="false"/>
+        <activity
+            android:name=".activities.VenueDetailsActivity"
+            android:exported="false"/>
     </application>
 </manifest>

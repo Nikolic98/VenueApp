@@ -18,3 +18,4 @@ open class ApiPostData() {
 }
 
 data class LoginRequestBody(val email: String, val password: String) : ApiPostData()
+data class VenueRequestBody(val latitude: String, val longitude: String) : ApiPostData()

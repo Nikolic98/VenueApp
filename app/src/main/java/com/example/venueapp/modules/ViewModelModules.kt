@@ -2,6 +2,7 @@ package com.example.venueapp.modules
 
 import androidx.lifecycle.ViewModel
 import com.example.venueapp.viewModel.LoginViewModel
+import com.example.venueapp.viewModel.VenueListViewModel
 import com.example.venueapp.viewModel.ViewModelKey
 import dagger.Binds
 import dagger.Module
@@ -17,5 +18,10 @@ abstract class ViewModelModules {
     @Binds
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
-    abstract fun provideAvailabilityViewModel(viewModel: LoginViewModel): ViewModel
+    abstract fun provideLoginViewModel(viewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(VenueListViewModel::class)
+    abstract fun provideVenueListViewModel(viewModel: VenueListViewModel): ViewModel
 }
